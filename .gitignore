@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+build/
+dist/
+*.spec
+*.sqlite3*
+.session-key
+*.log
+.env*
+node_modules/
+.test-artifacts/
+.impeccable/
+.agents/

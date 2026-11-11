@@ -1,0 +1,6 @@
+{
+  "name": "balcao-pdv-front-tests",
+  "private": true,
+  "scripts": {"test": "node --test tests/frontend.test.mjs"},
+  "devDependencies": {"jsdom": "^27.0.0"}
+}

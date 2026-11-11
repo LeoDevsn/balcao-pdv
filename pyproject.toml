@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "balcao-pdv"
+version = "0.1.0"
+description = "Caixa local para mercearias: vendas, estoque e conferência de turnos"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = ["Flask>=3.1.3,<3.2", "waitress>=3.0.2,<4"]
+authors = [{name = "Leonardo Santos"}]
+license = "MIT"
+
+[project.urls]
+Repository = "https://github.com/LeoDevsn/balcao-pdv"
+Issues = "https://github.com/LeoDevsn/balcao-pdv/issues"
+
+[project.scripts]
+balcao = "balcao.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["balcao*"]
+
+[tool.setuptools.package-data]
+balcao = ["frontend/*", "frontend/fonts/*"]
