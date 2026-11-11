@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "balcao-pdv"
-version = "0.1.0"
+version = "0.1.1"
 description = "Caixa local para mercearias: vendas, estoque e conferência de turnos"
 readme = "README.md"
 requires-python = ">=3.12"

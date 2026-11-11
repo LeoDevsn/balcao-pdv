@@ -23,7 +23,7 @@ test('Venda por código e peso, erro recuperável, troco, estoque e fechamento',
   dom=new JSDOM(await readFile(new URL('../balcao/frontend/index.html',import.meta.url),'utf8'),{url:base,runScripts:'outside-only',pretendToBeVisual:true,virtualConsole:console});
   const w=dom.window,doc=w.document;w.HTMLElement.prototype.scrollIntoView=()=>{};w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};w.HTMLDialogElement.prototype.close=function(){this.open=false;};
   let dropSaleResponse=false;
-  w.fetch=async(path,options={})=>{const url=new URL(path,base).href,headers=new Headers(options.headers),cookie=await dom.cookieJar.getCookieString(url);if(cookie)headers.set('Cookie',cookie);const response=await fetch(url,{...options,headers});for(const value of response.headers.getSetCookie())await dom.cookieJar.setCookie(value,url);if(dropSaleResponse&&path==='/api/sales'&&response.ok){dropSaleResponse=false;throw new Error('Resposta perdida no teste');}return response;};
+  w.fetch=async(path,options={})=>{const url=new URL(path,base).href,headers=new Headers(options.headers),cookie=await dom.cookieJar.getCookieString(url);if(cookie)headers.set('Cookie',cookie);const response=await fetch(url,{...options,headers});if(path==='/api/data')await pause(60);for(const value of response.headers.getSetCookie())await dom.cookieJar.setCookie(value,url);if(dropSaleResponse&&path==='/api/sales'&&response.ok){dropSaleResponse=false;throw new Error('Resposta perdida no teste');}return response;};
   w.eval(await readFile(new URL('../balcao/frontend/app.js',import.meta.url),'utf8'));
   const fill=(selector,value)=>{const el=doc.querySelector(selector);assert.ok(el,selector);el.value=value;el.dispatchEvent(new w.Event('input',{bubbles:true}));};
   const submit=selector=>doc.querySelector(selector).dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));
@@ -35,7 +35,7 @@ test('Venda por código e peso, erro recuperável, troco, estoque e fechamento',
   await go('products','[data-action=new-product]');
   async function product(name,code,unit,price,stock){
     click('[data-action=new-product]');fill('#f-name',name);fill('#f-code',code);fill('#f-unit',unit);fill('#f-price',price);submit('[data-form=product]');
-    await waitFor(()=>!doc.querySelector('[data-form=product]'),'produto salvo');
+    await waitFor(()=>!doc.querySelector('[data-form=product]')&&[...doc.querySelectorAll('#product-table tr')].some(r=>r.textContent.includes(name)),'produto salvo e lista atualizada');
     const rows=[...doc.querySelectorAll('#product-table tr')],row=rows.find(r=>r.textContent.includes(name));assert.ok(row);
     row.querySelector('[data-action=adjust-stock]').click();fill('#f-quantity',stock);fill('#f-reason','Estoque de teste');submit('[data-form=stock]');
     await waitFor(()=>!doc.querySelector('#dialog').open,'estoque salvo');

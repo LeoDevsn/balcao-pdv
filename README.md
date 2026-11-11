@@ -1,6 +1,6 @@
 # Balcão
 
-Caixa local para **mercearias e mercadinhos**, feito em Python e interface web. Primeira versão funcional: **0.1.0**.
+Caixa local para **mercearias e mercadinhos**, feito em Python e interface web. Primeira versão funcional: **0.1.1**.
 
 [Baixar para Windows](https://github.com/LeoDevsn/balcao-pdv/releases/latest) · [Reportar problema](https://github.com/LeoDevsn/balcao-pdv/issues)
 

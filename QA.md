@@ -1,4 +1,4 @@
-# Verificação da versão 0.1.0
+# Verificação da versão 0.1.1
 
 ## Executado
 

@@ -38,6 +38,7 @@ class ApiTests(unittest.TestCase):
         response=self.client.get('/')
         self.assertIn("frame-ancestors 'none'",response.headers['Content-Security-Policy'])
         self.assertEqual(response.headers['X-Content-Type-Options'],'nosniff')
+        response.close()
 
     def test_bad_login_throttled(self):
         self.setup_owner()
